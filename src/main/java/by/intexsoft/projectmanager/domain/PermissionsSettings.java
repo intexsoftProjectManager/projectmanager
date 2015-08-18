@@ -38,6 +38,8 @@ public class PermissionsSettings {
 	public boolean editChecklist;
 	public boolean viewAllChecklists;
 	
+	public boolean editPermissionsSettings;
+	
 	@OneToOne(mappedBy = "permissionsSettings")
 	public User user;
 }

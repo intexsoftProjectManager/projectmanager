@@ -53,6 +53,8 @@ public class Task {
 	
 	public Long color;
 	
+	public boolean isComplite = false;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "iteration_id", nullable = false)
 	public Iteration iteration;

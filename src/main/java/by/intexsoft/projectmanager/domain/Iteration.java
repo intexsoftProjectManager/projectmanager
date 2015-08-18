@@ -55,6 +55,8 @@ public class Iteration {
 	
 	public Long color;
 	
+	public boolean isComplite = false;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "project_id", nullable = false)
 	public Project project;
