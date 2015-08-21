@@ -34,7 +34,7 @@ public class HomeController {
 		proj.name="proj name";
 		proj.users.add(addUser);
 		manageService.addNewProject(addUser, proj);
-		//System.out.println(userService.getUserProjects(addUser).get(0).id);
+		System.out.println(userService.getUserProjects(addUser).get(0).id);
 		return new ModelAndView("index");
 	}
 }

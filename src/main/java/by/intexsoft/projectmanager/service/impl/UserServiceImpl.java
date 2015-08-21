@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public List<Project> getUserProjects(User user) {
-		return null;//projectRepository.findByUsersOrderByDate(user);
+		return projectRepository.findByUsersOrderByDate(user);
 	}
 
 	@Override
