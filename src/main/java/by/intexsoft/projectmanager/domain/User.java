@@ -19,9 +19,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import by.intexsoft.projectmanager.enums.UserType;
-
-
+import by.intexsoft.projectmanager.domain.enums.UserType;
 
 
 @Entity

@@ -22,7 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import by.intexsoft.projectmanager.enums.Priority;
+import by.intexsoft.projectmanager.domain.enums.Priority;
 
 
 @Entity
@@ -44,7 +44,7 @@ public class Project {
 	@Enumerated(EnumType.STRING)
 	public Priority priority = Priority.NONE;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
 	@JoinTable(name = "user_project", 
 			joinColumns = { 
 				@JoinColumn(name = "project_id", nullable = false) }, 

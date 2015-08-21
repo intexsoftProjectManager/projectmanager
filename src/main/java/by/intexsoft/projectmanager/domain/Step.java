@@ -13,8 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import by.intexsoft.projectmanager.enums.Priority;
-import by.intexsoft.projectmanager.enums.Result;
+import by.intexsoft.projectmanager.domain.enums.Priority;
+import by.intexsoft.projectmanager.domain.enums.Result;
 
 @Entity
 @Table (name="steps")

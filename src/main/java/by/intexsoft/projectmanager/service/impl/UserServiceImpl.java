@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService{
 		user.name="name";
 		user.lastName = "user lastname";
 		user.password="123456";
-		user.type=UserType.DEVELOPER;
+		user.type= UserType.DEVELOPER;
 		PermissionsSettings permSettings = new PermissionsSettings();
 		//permSettings.addProject = true;
 		user.permissionsSettings = permSettings;

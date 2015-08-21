@@ -22,8 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import by.intexsoft.projectmanager.enums.Priority;
-
+import by.intexsoft.projectmanager.domain.enums.Priority;
 
 @Entity
 @Table (name="tasks")
