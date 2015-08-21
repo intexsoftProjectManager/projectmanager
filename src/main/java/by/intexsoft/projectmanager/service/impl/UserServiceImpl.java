@@ -1,5 +1,6 @@
 package by.intexsoft.projectmanager.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import by.intexsoft.projectmanager.dao.IterationRepository;
+import by.intexsoft.projectmanager.dao.PermissionsSettingsRepository;
 import by.intexsoft.projectmanager.dao.ProjectRepository;
 import by.intexsoft.projectmanager.dao.TaskRepository;
 import by.intexsoft.projectmanager.dao.UserRepository;
@@ -16,6 +18,7 @@ import by.intexsoft.projectmanager.domain.PermissionsSettings;
 import by.intexsoft.projectmanager.domain.Project;
 import by.intexsoft.projectmanager.domain.Task;
 import by.intexsoft.projectmanager.domain.User;
+import by.intexsoft.projectmanager.domain.enums.UserType;
 import by.intexsoft.projectmanager.service.UserService;
 
 @Service
@@ -34,16 +37,22 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	TaskRepository taskRepository;
 	
+	@Autowired
+	PermissionsSettingsRepository permissionsSettingsRepository;
 	
 
 	@Override
 	public User addUser() {
 		User user = new User();
-		user.email="erwrwer";
+		user.email="user email 1";
 		user.name="name";
-		user.lastName = "lastname";
+		user.lastName = "user lastname";
 		user.password="123456";
-		user.type="developer";
+		user.type=UserType.DEVELOPER;
+		PermissionsSettings permSettings = new PermissionsSettings();
+		//permSettings.addProject = true;
+		user.permissionsSettings = permSettings;
+		user.permissionsSettings.addProject = true;
 		return userRepository.save(user);
 	}
 

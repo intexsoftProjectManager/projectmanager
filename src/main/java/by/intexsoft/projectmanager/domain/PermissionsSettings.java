@@ -9,6 +9,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 @Table (name="permissions_settings")
 public class PermissionsSettings {
@@ -18,27 +21,27 @@ public class PermissionsSettings {
 	@PrimaryKeyJoinColumn
 	public Long id;
 	
-	public boolean viewIterationCalendar;
-	public boolean addIterationCalendar;
-	public boolean editIterationCalendar;
-	public boolean viewAllIterations;
+	public Boolean viewIterationCalendar = true;
+	public Boolean addIterationCalendar = false;
+	public Boolean editIterationCalendar = false;
+	public Boolean viewAllIterations = false;
 	
-	public boolean viewProject = true;
-	public boolean addProject;
-	public boolean editProject;
-	public boolean viewAllProjects;
+	public Boolean viewProject = true;
+	public Boolean addProject = false;
+	public Boolean editProject = false;
+	public Boolean viewAllProjects = false;
 	
-	public boolean viewTaskCalendar;
-	public boolean addTaskCalendar;
-	public boolean editTaskCalendar;
-	public boolean viewAllTaskCalendars;
+	public Boolean viewTaskCalendar = true;
+	public Boolean addTaskCalendar = false;
+	public Boolean editTaskCalendar = false;
+	public Boolean viewAllTaskCalendars = false;
 
-	public boolean viewChecklist;
-	public boolean addChecklist;
-	public boolean editChecklist;
-	public boolean viewAllChecklists;
+	public Boolean viewChecklist = true;
+	public Boolean addChecklist = false;
+	public Boolean editChecklist = false;
+	public Boolean viewAllChecklists = false;
 	
-	public boolean editPermissionsSettings;
+	public Boolean editPermissionsSettings = false;
 	
 	@OneToOne(mappedBy = "permissionsSettings")
 	public User user;

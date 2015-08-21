@@ -1,9 +1,13 @@
 package by.intexsoft.projectmanager.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,8 +19,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import by.intexsoft.projectmanager.enums.UserType;
+
+
+
 
 @Entity
 @Table (name="users")
@@ -41,34 +47,38 @@ public class User {
 	public String lastName;
 	
 	@Column(nullable=false)
-	public String type="user";
+	@Enumerated(EnumType.STRING)
+	public UserType type = UserType.NONE;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "user_project", 
 			joinColumns = { 
 				@JoinColumn(name = "user_id", nullable = false) }, 
 				inverseJoinColumns = { @JoinColumn(name = "project_id", nullable = false) })
-	@Cascade({CascadeType.SAVE_UPDATE})
-	public List<Project> projects;
+	public List<Project> projects = new ArrayList<Project>();
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "user_iteration", 
 			joinColumns = { 
 				@JoinColumn(name = "user_id", nullable = false) }, 
 				inverseJoinColumns = { @JoinColumn(name = "iteration_id", nullable = false) })
-	@Cascade({CascadeType.SAVE_UPDATE})
-	public List<Iteration> iterations;
+	public List<Iteration> iterations = new ArrayList<Iteration>();
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "user_task", 
 			joinColumns = { 
 				@JoinColumn(name = "user_id", nullable = false) }, 
 				inverseJoinColumns = { @JoinColumn(name = "task_id", nullable = false) })
-	@Cascade({CascadeType.SAVE_UPDATE})
-	public List<Task> tasks;
+	public List<Task> tasks = new ArrayList<Task>();
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@Cascade({CascadeType.SAVE_UPDATE})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(name = "user_checklist", 
+			joinColumns = { 
+				@JoinColumn(name = "user_id", nullable = false) }, 
+				inverseJoinColumns = { @JoinColumn(name = "checklist_id", nullable = false) })
+	public List<CheckList> checkLists = new ArrayList<CheckList>();
+	
+	@OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name="perm_settings_id")
 	public PermissionsSettings permissionsSettings;
 

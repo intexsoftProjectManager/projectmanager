@@ -3,7 +3,6 @@ package by.intexsoft.projectmanager.config;
 import static org.hibernate.cfg.AvailableSettings.HBM2DDL_AUTO;
 
 import java.net.*;
-import java.sql.Driver;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -13,7 +12,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
-import org.springframework.jdbc.datasource.embedded.*;
 import org.springframework.orm.jpa.*;
 import org.springframework.orm.jpa.vendor.*;
 import org.springframework.stereotype.Controller;
@@ -24,6 +22,7 @@ import org.springframework.stereotype.Controller;
 		@ComponentScan.Filter(value = Controller.class, type = FilterType.ANNOTATION),
 		@ComponentScan.Filter(value = Configuration.class, type = FilterType.ANNOTATION)
 })
+
 public class AppConfig extends RepositoryRestMvcConfiguration {
 
 	@Override
@@ -56,12 +55,17 @@ public class AppConfig extends RepositoryRestMvcConfiguration {
 	    return adapter;
 	  }
 
-	  @Bean(name="entityManager")
-	  public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws ClassNotFoundException {
-	    LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+	  @Bean
+	    public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws ClassNotFoundException {
+	    HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+	    vendorAdapter.setGenerateDdl(Boolean.TRUE);
+	    vendorAdapter.setShowSql(Boolean.TRUE);
+	    
+		LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
 	    factoryBean.setDataSource(dataSource());
-	    factoryBean.setPackagesToScan("by.intexsoft.projectmanager.model");
-	    factoryBean.setJpaVendorAdapter(jpaVendorAdapter());
+	    factoryBean.setPackagesToScan("by.intexsoft.projectmanager.domain");
+	    factoryBean.setJpaVendorAdapter(vendorAdapter);
+	    factoryBean.afterPropertiesSet();
 	    factoryBean.setJpaProperties(jpaProperties());
 
 	    return factoryBean;
