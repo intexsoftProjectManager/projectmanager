@@ -21,9 +21,9 @@ public class PermissionsSettings {
 	@PrimaryKeyJoinColumn
 	public Long id;
 	
-	public Boolean viewIterationCalendar = true;
-	public Boolean addIterationCalendar = false;
-	public Boolean editIterationCalendar = false;
+	public Boolean viewIterations = true;
+	public Boolean addIterations = false;
+	public Boolean editIterations = false;
 	public Boolean viewAllIterations = false;
 	
 	public Boolean viewProject = true;
@@ -31,15 +31,20 @@ public class PermissionsSettings {
 	public Boolean editProject = false;
 	public Boolean viewAllProjects = false;
 	
-	public Boolean viewTaskCalendar = true;
-	public Boolean addTaskCalendar = false;
-	public Boolean editTaskCalendar = false;
-	public Boolean viewAllTaskCalendars = false;
+	public Boolean viewTasks = true;
+	public Boolean addTasks = false;
+	public Boolean editTasks = false;
+	public Boolean viewAllTasks = false;
 
 	public Boolean viewChecklist = true;
 	public Boolean addChecklist = false;
 	public Boolean editChecklist = false;
 	public Boolean viewAllChecklists = false;
+	
+	public Boolean viewSteps = true;
+	public Boolean addSteps = false;
+	public Boolean editSteps = false;
+	public Boolean viewAllSteps = false;
 	
 	public Boolean editPermissionsSettings = false;
 	

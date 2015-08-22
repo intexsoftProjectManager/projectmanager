@@ -57,4 +57,8 @@ public class Project {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project", 
 			cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	public List<Iteration> iterations = new ArrayList<Iteration>();
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project", 
+			cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	public List<CheckList> checkLists = new ArrayList<CheckList>();
 }

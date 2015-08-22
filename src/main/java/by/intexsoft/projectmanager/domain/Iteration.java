@@ -37,7 +37,7 @@ public class Iteration {
 	
 	public String description;
 		
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
 	@JoinTable(name = "user_iteration", 
 			joinColumns = { 
 				@JoinColumn(name = "iteration_id", nullable = false) }, 
@@ -51,7 +51,7 @@ public class Iteration {
 	
 	public Long color;
 	
-	public boolean isComplite = false;
+	public boolean isComplete = false;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "project_id", nullable = false)

@@ -9,6 +9,6 @@ import by.intexsoft.projectmanager.domain.Project;
 import by.intexsoft.projectmanager.domain.User;
 
 public interface ProjectRepository extends EntityRepository<Project> {
-	@Query("SELECT p FROM Project p INNER JOIN p.users u WHERE u = :user")
+	@Query("SELECT p FROM Project p INNER JOIN p.users u WHERE u = :user ORDER BY p.creationDate")
 	List<Project> findByUsersOrderByDate(@Param("user") User user);
 }

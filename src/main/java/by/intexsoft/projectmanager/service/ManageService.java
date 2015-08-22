@@ -1,8 +1,10 @@
 package by.intexsoft.projectmanager.service;
 
+import by.intexsoft.projectmanager.domain.CheckList;
 import by.intexsoft.projectmanager.domain.Iteration;
 import by.intexsoft.projectmanager.domain.PermissionsSettings;
 import by.intexsoft.projectmanager.domain.Project;
+import by.intexsoft.projectmanager.domain.Step;
 import by.intexsoft.projectmanager.domain.Task;
 import by.intexsoft.projectmanager.domain.User;
 
@@ -11,4 +13,6 @@ public interface ManageService {
 	Iteration addNewIteration(User manager, Iteration iteration) throws Exception;
 	Task addNewTask(User manager, Task task) throws Exception;
 	void changePermissionsSettings(User manager, PermissionsSettings permSettings) throws Exception;
+	CheckList addNewCheckList(User manager, CheckList checkList) throws Exception;
+	Step addNewStep(User manager, Step step) throws Exception;
 }

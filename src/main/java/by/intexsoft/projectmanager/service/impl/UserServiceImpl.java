@@ -8,14 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import by.intexsoft.projectmanager.dao.CheckListRepository;
 import by.intexsoft.projectmanager.dao.IterationRepository;
 import by.intexsoft.projectmanager.dao.PermissionsSettingsRepository;
 import by.intexsoft.projectmanager.dao.ProjectRepository;
+import by.intexsoft.projectmanager.dao.StepRepository;
 import by.intexsoft.projectmanager.dao.TaskRepository;
 import by.intexsoft.projectmanager.dao.UserRepository;
+import by.intexsoft.projectmanager.domain.CheckList;
 import by.intexsoft.projectmanager.domain.Iteration;
 import by.intexsoft.projectmanager.domain.PermissionsSettings;
 import by.intexsoft.projectmanager.domain.Project;
+import by.intexsoft.projectmanager.domain.Step;
 import by.intexsoft.projectmanager.domain.Task;
 import by.intexsoft.projectmanager.domain.User;
 import by.intexsoft.projectmanager.domain.enums.UserType;
@@ -40,6 +44,12 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	PermissionsSettingsRepository permissionsSettingsRepository;
 	
+	@Autowired
+	CheckListRepository checkListRepository;
+	
+	@Autowired
+	StepRepository stepRepository;
+	
 
 	@Override
 	public User addUser() {
@@ -50,9 +60,12 @@ public class UserServiceImpl implements UserService{
 		user.password="123456";
 		user.type= UserType.DEVELOPER;
 		PermissionsSettings permSettings = new PermissionsSettings();
-		//permSettings.addProject = true;
 		user.permissionsSettings = permSettings;
 		user.permissionsSettings.addProject = true;
+		user.permissionsSettings.addIterations = true;
+		user.permissionsSettings.addTasks = true;
+		user.permissionsSettings.addChecklist = true;
+		user.permissionsSettings.addSteps = true;
 		return userRepository.save(user);
 	}
 
@@ -101,34 +114,53 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<Iteration> getUserAllIterations(User user) {
-		return null;//iterationRepository.findByUsersOrderByFinishDate(user);
+	public List<Iteration> getAllUserIterations(User user) {
+		return iterationRepository.findByUsersOrderByFinishDate(user);
 	}
 
 	@Override
-	public List<Iteration> getUserCompliteIterations(User user) {
-		return null;//iterationRepository.findByUsersAndIsCompliteOrderByFinishDate(user, true);
+	public List<Iteration> getUserCompleteIterations(User user) {
+		return iterationRepository.findByUsersAndIsCompleteOrderByFinishDate(user, true);
 	}
 
 	@Override
-	public List<Iteration> getUserNotCompliteIterations(User user) {
-		return null;//iterationRepository.findByUsersAndIsCompliteOrderByFinishDate(user, false);
+	public List<Iteration> getUserNotCompleteIterations(User user) {
+		return iterationRepository.findByUsersAndIsCompleteOrderByFinishDate(user, false);
 	}
 
 	@Override
-	public List<Task> getUserAllTasks(User user) {
-		return null;//taskRepository.findByUsersAndIsCompliteOrderByFinishDate(user, true);
+	public List<Task> getAllUserTasks(User user) {
+		return taskRepository.findByUsersOrderByFinishDate(user);
 	}
 
 	@Override
-	public List<Task> getUserCompliteTasks(User user) {
-		return null;//taskRepository.findByUsersAndIsCompliteOrderByFinishDate(user, true);
+	public List<Task> getUserCompleteTasks(User user) {
+		return taskRepository.findByUsersAndIsCompleteOrderByFinishDate(user, true);
 	}
 
 	@Override
-	public List<Task> getUserNotCompliteTasks(User user) {
-		return null;//taskRepository.findByUsersAndIsCompliteOrderByFinishDate(user, false);
+	public List<Task> getUserNotCompleteTasks(User user) {
+		return taskRepository.findByUsersAndIsCompleteOrderByFinishDate(user, false);
+	}
+	
+	@Override
+	public List<CheckList> getUserCheckLists(User user) {
+		return checkListRepository.findByUsers(user);
 	}
 
+	@Override
+	public List<CheckList> getUserFinishedCheckLists(User user) {
+		return checkListRepository.findByUsersAndIsFinished(user, true);
+	}
+
+	@Override
+	public List<CheckList> getUserNotFinishedCheckLists(User user) {
+		return checkListRepository.findByUsersAndIsFinished(user, false);
+	}
+
+	@Override
+	public List<Step> getAllUserSteps(User user) {
+		return null;//stepRepository.findByUsers(user);
+	}
 	
 }

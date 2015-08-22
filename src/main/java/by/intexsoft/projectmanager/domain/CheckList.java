@@ -31,7 +31,7 @@ public class CheckList {
 	
 	public String comment;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade={CascadeType.MERGE, CascadeType.PERSIST })
+	@ManyToMany(fetch = FetchType.LAZY, cascade={CascadeType.MERGE})
 	@JoinTable(name = "user_checklist", 
 			joinColumns = { 
 				@JoinColumn(name = "checklist_id", nullable = false) }, 
@@ -41,9 +41,13 @@ public class CheckList {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "checkList", cascade={CascadeType.MERGE, CascadeType.PERSIST })
 	public List<Step> steps = new ArrayList<Step>();
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinColumn(name = "folder_id", nullable = false)
-	private Folder folder;
+	public Folder folder;
 	
 	public boolean isFinished = false;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "project_id", nullable = false)
+	public Project project;
 }
