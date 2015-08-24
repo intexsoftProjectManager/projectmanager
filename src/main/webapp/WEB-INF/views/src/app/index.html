@@ -1,0 +1,164 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <base href="/"/>
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="./views/bower_components/ng-table/ng-table.css">
+        <link rel="stylesheet" href="./views/bower_components/select2/select2.css">
+        <link rel="stylesheet" href="./views/bower_components/fullcalendar/fullcalendar.css">
+        <link rel="stylesheet" href="./views/bower_components/fullcalendar/fullcalendar.print.css">
+        <link rel="stylesheet" href="./views/bower_components/spectrum/spectrum.css">
+        <link rel="stylesheet" href="./views/bower_components/ngDialog/css/ngDialog-theme-plain.css"/>
+        <link rel="stylesheet" href="./views/bower_components/ngDialog/css/ngDialog.css"/>
+        <link rel="stylesheet" href="./views/bower_components/acute/acute.css"/>
+        <link href="./views/bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
+        <link rel="stylesheet" href="./views/bower_components/ngprogress/ngProgress.css">
+        <link rel="stylesheet" href="./views/bower_components/components-font-awesome/css/font-awesome.css">
+        <link rel="stylesheet" href="./views/src/app/shared/directives/ui-select/ui-select.css">
+        <link rel="stylesheet" href="./views/bower_components/angular-gantt/assets/angular-gantt.css"/>
+        <link rel="stylesheet" href="./views/bower_components/angular-gantt/assets/angular-gantt-plugins.css"/>
+        <!-- endbuild -->
+</head>
+  <body id="app" ng-app="tms">
+    <!-- The splash screen must be first -->
+    <div class="splash" ng-cloak>
+      <div class="col-md-4 col-md-offset-4" style="position: absolute;top:0;bottom: 0;right: 0;left: 0;margin: auto; height: 260px">
+        <img src="./views/media/logo-splash.png" style="margin: 0 auto 10px;display: block">
+        <p>Test Management System</p>
+        <img src="./views/media/ajax-loader.gif" width="32px" style="margin: 0 auto 10px;display: block">
+      </div>
+    </div>
+    <!--[if lt IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+    <script src="./views/bower_components/es5-shim/es5-shim.js"></script>
+    <script src="./views/bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <div ui-view=""></div>
+    <script src="./views/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="./views/bower_components/jquery-ui/ui/jquery-ui.js"></script>
+    <script src="./views/libs/jQuery.touch.js"></script>
+    <script src="./views/bower_components/angular/angular.js"></script>
+    <script src="./views/bower_components/floatThead/dist/jquery.floatThead.js"></script>
+
+        <!-- build:js(app) scripts/modules.js -->
+        <script src="./views/bower_components/moment/moment.js"></script>
+        <script src="./views/bower_components/angular-moment/angular-moment.js"></script>
+        <script src="./views/bower_components/select2/select2.js"></script>
+        <script src="./views/bower_components/spectrum/spectrum.js"></script>
+        <script src="./views/bower_components/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.js"></script>
+        <script src="./views/bower_components/angular-resource/angular-resource.js"></script>
+        <script src="./views/bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="./views/bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="./views/bower_components/angular-route/angular-route.js"></script>
+        <script src="./views/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="./views/bower_components/angular-http-auth/src/http-auth-interceptor.js"></script>
+        <script src="./views/bower_components/ng-table/ng-table.js"></script>
+        <script src="./views/bower_components/angular-ui-select2/src/select2.js"></script>
+        <script src="./views/bower_components/socket.io-client/socket.io.js"></script>
+        <script src="./views/bower_components/angular-socket-io/socket.min.js"></script>
+        <script src="./views/bower_components/angular-ui-calendar/src/calendar.js"></script>
+        <script src="./views/bower_components/fullcalendar/fullcalendar.js"></script>
+        <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+        <script src='./views/bower_components/lodash/dist/lodash.underscore.js'></script>
+        <script src='./views/bower_components/angular-google-maps/dist/angular-google-maps.js'></script>
+        <script src='./views/bower_components/ngDialog/js/ngDialog.js'></script>
+        <script src='./views/bower_components/acute/acute.js'></script>
+        <script src="./views/bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+        <script src='./views/bower_components/textAngular/dist/textAngular-sanitize.min.js'></script>
+        <script src='./views/bower_components/textAngular/src/textAngular.js'></script>
+        <script src='./views/bower_components/textAngular/src/textAngularSetup.js'></script>
+        <script src='./views/bower_components/iscroll/build/iscroll.js'></script>
+        <script src='./views/bower_components/ng-iscroll/src/ng-iscroll.js'></script>
+        <script src='./views/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js'></script>
+        <script src='./views/bower_components/js-xlsx/dist/xlsx.core.min.js'></script>
+        <script src='./views/bower_components/checklist-model/checklist-model.js'></script>
+        <script src='./views/bower_components/mb-scrollbar/mb-scrollbar.js'></script>
+        <script src='./views/bower_components/ng-context-menu/dist/ng-context-menu.js'></script>
+        <script src='./views/bower_components/angular-ui-router/release/angular-ui-router.min.js'></script>
+        <script src="./views/bower_components/angular-gantt/assets/angular-gantt.js"></script>
+        <script src="./views/bower_components/angular-gantt/assets/angular-gantt-plugins.js"></script>
+        <script src="./views/bower_components/angular-file-upload/angular-file-upload.js"></script>
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="./views/src/app/app.js"></script>
+        <script src="./views/src/app/app.routes.js"></script>
+        <script src="./views/src/app/app.run.js"></script>
+        <script src="./views/src/app/main/main.controller.js"></script>
+        <script src="./views/src/app/login/login.controller.js"></script>
+        <script src="./views/src/app/navbar/navbar.controller.js"></script>
+        <script src="./views/src/app/projects/projects.controller.js"></script>
+        <script src="./views/src/app/projects/request/request.controller.js"></script>
+        <script src="./views/src/app/projects/project/project.controller.js"></script>
+        <script src="./views/src/app/projects/project/checklists/checklists.controller.js"></script>
+        <script src="./views/src/app/projects/project/checklists/checklist-tree-view.controller.js"></script>
+        <script src="./views/src/app/projects/project/checklists/checklist-folder.controller.js"></script>
+        <script src="./views/src/app/projects/project/checklists/checklist.controller.js"></script>
+        <script src="./views/src/app/projects/project/checklists/execute/execute.controller.js"></script>
+        <script src="./views/src/app/projects/project/checklists/execute/executed-checklist-group.controller.js"></script>
+        <script src="./views/src/app/projects/project/checklists/execute/executed-checklist.directive.js"></script>
+        <script src="./views/src/app/projects/project/checklists/execute/executed-checklist.service.js"></script>
+        <script src="./views/src/app/projects/project/checklists/checklist-tree-view.directive.js"></script>
+        <script src="./views/src/app/projects/project/checklists/checklist-tree-view.service.js"></script>
+        <script src="./views/src/app/projects/project/checklists/checklist.directive.js"></script>
+        <script src="./views/src/app/projects/project/checklists/checklist-group.controller.js"></script>
+        <script src="./views/src/app/projects/project/checklists/checklist.service.js"></script>
+        <script src="./views/src/app/projects/project/timelines/timelines.controller.js"></script>
+        <script src="./views/src/app/projects/project/issues/issues.controller.js"></script>
+        <script src="./views/src/app/projects/project/issues/execute/execute.controller.js"></script>
+        <script src="./views/src/app/projects/project/settings/settings.controller.js"></script>
+        <script src="./views/src/app/calendars/iteration/iteration-calendar.controller.js"></script>
+        <script src="./views/src/app/calendars/task/task-calendar.controller.js"></script>
+        <script src="./views/src/app/utilities/gps-map/gps-map.controller.js"></script>
+        <script src="./views/src/app/admin/user-manage/user-manage.controller.js"></script>
+        <script src="./views/src/app/shared/directives/unique-username.directive.js"></script>
+        <script src="./views/src/app/shared/directives/on-focus.directive.js"></script>
+        <script src="./views/src/app/shared/directives/mongoose-error.directive.js"></script>
+        <script src="./views/src/app/shared/directives/disable-click.directive.js"></script>
+        <script src="./views/src/app/shared/directives/on-height-change.directive.js"></script>
+        <script src="./views/src/app/shared/directives/disable-animate.directive.js"></script>
+        <script src="./views/src/app/shared/directives/ui-select/ui-select.directive.js"></script>
+        <script src="./views/src/app/shared/directives/datepicker-popup.directive.js"></script>
+        <script src="./views/src/app/shared/directives/angular-google-chart/ng-google-chart.js"></script>
+        <script src="./views/src/app/shared/services/rest-services/User.js"></script>
+        <script src="./views/src/app/shared/services/rest-services/Builds.js"></script>
+        <script src="./views/src/app/shared/services/rest-services/Environments.js"></script>
+        <script src="./views/src/app/shared/services/rest-services/Session.js"></script>
+        <script src="./views/src/app/shared/services/rest-services/Projects.js"></script>
+        <script src="./views/src/app/shared/services/rest-services/Iterations.js"></script>
+        <script src="./views/src/app/shared/services/rest-services/ChecklistFolders.js"></script>
+        <script src="./views/src/app/shared/services/rest-services/Checklists.js"></script>
+        <script src="./views/src/app/shared/services/rest-services/Mail.js"></script>
+        <script src="./views/src/app/shared/services/rest-services/ExecutedChecklists.js"></script>
+        <script src="./views/src/app/shared/services/rest-services/IterationCalendar.js"></script>
+        <script src="./views/src/app/shared/services/rest-services/Tasks.js"></script>
+        <script src="./views/src/app/shared/services/rest-services/Charts.js"></script>
+        <script src="./views/src/app/shared/services/rest-services/timeline.service.js"></script>
+        <script src="./views/src/app/shared/services/rest-services/report.service.js"></script>
+        <script src="./views/src/app/shared/services/Auth.js"></script>
+        <script src="./views/src/app/shared/services/Socket.js"></script>
+        <script src="./views/src/app/shared/services/PoollingFactory.js"></script>
+        <script src="./views/src/app/shared/filters/offset.js"></script>
+        <script src="./views/src/app/shared/filters/statusFilter.js"></script>
+        <script src="./views/src/app/shared/constants/priorities.js"></script>
+        <script src="./views/src/app/shared/js/Blob.js"></script>
+        <script src="./views/src/app/shared/js/FileSaver.js"></script>
+        <!-- endbuild -->
+</body>
+</html>

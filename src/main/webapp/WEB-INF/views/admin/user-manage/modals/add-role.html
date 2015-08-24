@@ -1,0 +1,20 @@
+<div class="dialog-contents">
+    <div class="row" style="margin-top: 5px">
+        <div class="col-sm-12">
+            <span class="label label-success">Name:</span>
+            <input class="form-control" ng-model="newRole.name">
+        </div>
+        <div class="col-sm-12">
+            <span class="label label-success">Comment:</span>
+            <textarea class="form-control" ng-model="newRole.comment"></textarea>
+        </div>
+    </div>
+    <div class="row" style="padding-top: 5px">
+        <div class="col-sm-6">
+            <button class="form-control btn btn-primary" ng-click="closeThisDialog()">Cancel</button>
+        </div>
+        <div class="col-sm-6">
+            <button class="form-control btn btn-success" ng-click="confirm()">Create</button>
+        </div>
+    </div>
+</div>

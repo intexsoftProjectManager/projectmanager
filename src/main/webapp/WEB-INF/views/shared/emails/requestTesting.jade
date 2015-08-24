@@ -1,0 +1,17 @@
+doctype html
+html
+    head
+        meta(http-equiv = 'Content-Type', content = 'text/html; charset=UTF-8')
+        title= subject
+        style(type = 'text/css').
+            h1 {
+                color: #fe57a1
+            }
+    body
+        p Manager (who request): #{manager}
+        p Project: #{project}
+        p Target version: #{version}
+        p App version: #{appVersion}
+        p Assignee: #{assignee}
+        p Tasks for testing: #{tasks}
+        p Other (login credentials, links to specs and etc): #{other}

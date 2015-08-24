@@ -1,0 +1,70 @@
+<div class="row-fluid projects-layout" style="margin:20px 0">
+    <div style="padding-right: 350px; width:100%; position: absolute">
+        <div class="well" style="padding: 0px">
+            <div class="row" style="margin:0;border-bottom: 1px solid #b1b1b1;height: 33px" >
+              <span style="padding-top: 5px;padding-left: 10px;position: absolute;font-size: 16px;font-family: 'Ubuntu Medium'; color:#0b7458;">Projects</span>
+            </div>
+            <table ng-table="tableParams" class="table" show-filter="true" style="-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;">
+                <tr ng-repeat="project in projects" ng-click="project.$selected = !project.$selected; changeSelection(project)" ng-class="{'active-row': project.$selected, even: $even, odd: $odd}">
+                    <td data-title="'Name'" filter="{ 'name': 'text' }" sortable="'name'" ng-dblclick="open($event, project._id)">{{project.name}}</td>
+                    <td data-title="'Creation Date'" sortable="'creationDate'">{{project.creationDate | date : 'yyyy-MM-dd'}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="accordion-style" ng-init="getUsers()">
+        <accordion close-others="oneAtATime">
+            <accordion-group is-collapseble="true" is-open="accordionGroups[0].isOpen" is-disabled="accordionGroups[0].isDisabled">
+                <accordion-heading>
+                    Project Description <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordionGroups[0].isOpen, 'glyphicon-chevron-right': !accordionGroups[0].isOpen}"></i>
+                </accordion-heading>
+                <div class="form-group">
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <input placeholder="Project" ng-disabled="!hasPermissionEdit" id="project" class="form-control" ng-model="p_selected.name" ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0} }" ng-change="update()">
+                    </div>
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <textarea style="height:auto !important;" placeholder="Description" ng-disabled="!hasPermissionEdit" id="description"  rows="4" class="form-control" ng-model="p_selected.desc" ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0} }"  ng-change="update()">
+                        </textarea>
+                    </div>
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <select placeholder="Priority" ng-disabled="!hasPermissionEdit" class="form-control" ng-model="p_selected.priority" id="priority" ng-options="priority.value as priority.text for priority in priorities" ng-change="update()">
+                        </select>
+                    </div>
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <input placeholder="Users" ng-disabled="!hasPermissionEdit" class="form-control" type="hidden" ui-select2="select2UsersOptions" ng-model="p_selected.users" style="height:auto" ng-change="update()">
+                    </div>
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                      <input placeholder="Redmine ID" id="redmine-id" class="form-control" ng-model="p_selected.redmine_id" ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0} }"  ng-change="update()">
+                    </div>
+                </div>
+            </accordion-group>
+            <accordion-group ng-if="hasPermissionAdd" is-collapseble="true" is-open="accordionGroups[1].isOpen" is-disabled="accordionGroups[1].isDisabled">
+                <accordion-heading>
+                    Create New Project <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordionGroups[1].isOpen, 'glyphicon-chevron-right': !accordionGroups[1].isOpen}"></i>
+                </accordion-heading>
+                <form class="form-horizontal" ng-submit="create()">
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <input placeholder="Project" id="new-project" class="form-control" ng-model="newProject.name">
+                    </div>
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <textarea style="height:auto !important;" rows="4" placeholder="Description" id="new-description" class="form-control" ng-model="newProject.desc">
+                        </textarea>
+                    </div>
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <select placeholder="Priority" class="form-control" ng-model="newProject.priority" id="new-priority" ng-options="priority.value as priority.text for priority in priorities">
+                        </select>
+                    </div>
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <input placeholder="Users" class="form-control" type="hidden" ui-select2="select2UsersOptions" ng-model="newProject.users" style="height:auto">
+                    </div>
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                      <input placeholder="Redmine ID" id="new-redmine-id" class="form-control" ng-model="newProject.redmine_id">
+                    </div>
+                    <div class="row center-block" style="padding-top: 5px">
+                        <button type="submit" class="btn btn-success">Create</button>
+                    </div>
+                </form>
+            </accordion-group>
+        </accordion>
+   </div>
+</div>

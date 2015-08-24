@@ -1,0 +1,128 @@
+<div ng-if="checklist" class="well checklist-execute" style="margin: 20px 0;padding: 0 0 15px">
+    <div class="row" ng-click="isOpen = !isOpen" style="margin:0;padding:0; border-bottom: 1px solid #b1b1b1;height: 35px">
+        <img src="{{isOpen ? 'media/arrow_expand.png' : 'media/arrow_collapse.png'}}"  class="pull-left" style="cursor: pointer" ng-style="{'margin-left': isOpen ? '10px':'10px', 'margin-top': isOpen ? '15px':'10px'}">
+        <span style="margin-left: 10px;margin-top: 8px;position: absolute;font-size: 16px;font-family: 'Ubuntu Medium'; color:#0b7458;">{{checklist.name}}</span>
+        <img src="media/stop.png" ng-if="checklist.status == 0 || checklist.status == 1" ng-click="changeStatus($event, 2)" class="pull-right" title="Stop execute" style="margin-top: 5px;margin-right: 10px;cursor: pointer">
+        <img src="media/pause.png" ng-if="checklist.status == 0" ng-click="changeStatus($event, 1)" class="pull-right" title="Pause execute" style="margin-top: 5px;margin-right: 10px;cursor: pointer">
+        <img src="media/play.png" ng-if="checklist.status == 1" ng-click="changeStatus($event, 0)" class="pull-right" title="Continue execute" style="margin-top: 5px;margin-right: 10px;cursor: pointer">
+        <img src="media/print.png" ng-if="checklist.status == 2" ng-click="generateXLS(checklist)" class="pull-right" title="Generate XLS" style="margin-top: 5px;margin-right: 10px;cursor: pointer">
+    </div>
+    <div ng-show="isOpen" class="row" style="margin: 10px;padding: 0">
+        <div class="col-sm-12 checklist-fields">
+          <div style="float: left;width: 200px">
+            Iteration
+            </div>
+          <div style="float: left;width: 250px">
+            Build
+           </div>
+          <div style="float: left;width: 185px">
+            Environment
+          </div>
+          <div style="float: left;width: 190px">
+            Tester
+          </div>
+          <div style="float: left;width: 310px">
+            Comment
+          </div>
+        </div>
+        <div class="col-sm-12 well" style="padding: 10px; margin:0;border-radius: 0;">
+            <div style="float: left;width: 200px">
+              <input ng-change="update(checklist)" style="width:185px"  ui-select2="select2IterationsOptions" ng-model="checklist._iteration" ng-disabled="checklist.status == 2" style="height:auto; width:100%">
+            </div>
+            <div style="float: left;width: 200px">
+              <select ng-change="update(checklist)" ui-select2 ng-model="checklist.build" ng-disabled="checklist.status == 2" data-placeholder="Pick a number" style="width:185px">
+                <option ng-repeat="build in builds" value="{{build._id}}">{{build.name}}</option>
+              </select>
+            </div>
+            <div style="float: left;width: 50px;min-height: 1px;">
+              <img src="media/button_add.png" ng-click="addBuild()" ng-hide="checklist.status == 2">
+            </div>
+            <div style="float: left;width: 135px">
+                <div style="max-height: 80px; height:80px; overflow-y: scroll;width:120px">
+                  <div class="checkbox" ng-repeat="env in envs">
+                    <input type="checkbox" id="checkboxInput{{$index}}" checklist-model="checklist.environment" checklist-value="env._id" checklist-change="update(checklist)" ng-disabled="checklist.status == 2 || (checklist.environment.length > 4 && checked === false) ">
+                    <label for="checkboxInput{{$index}}"></label>
+                    {{env.name}}
+                  </div>
+                </div>
+            </div>
+            <div style="float: left;width: 50px;min-height: 1px;">
+              <img src="media/button_add.png" ng-click="checklist.environment.length < 4 ? addEnv() : showWarning('Too many environment selected!')" ng-hide="checklist.status == 2">
+            </div>
+            <div style="float: left;width: 190px">
+                <input class="form-control" style="width:170px" ng-model="checklist.creator.name" readonly>
+            </div>
+            <div style="float: left;width: 310px">
+              <textarea class="form-control" ng-model="checklist.comment" ng-change="update(checklist)" ng-model-options="{updateOn: 'blur', debounce: {default: 2000, blur: 0} }" ng-disabled="checklist.status == 2"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row well statusFilter" style="margin:10px 10px 0;padding: 10px;font-size: 16px;font-family: "Ubuntu Medium">
+      <span style="margin-right: 25px">Filters:</span>
+      <img ng-click="addToStatusFilter(0)" alt="Ok" title="Ok" name="ok" src="media/checklist/result/ok_on.png" ng-class="getStatusFilterClass(0)">
+      <img ng-click="addToStatusFilter(1)" alt="Fail" title="Fail" name="fail" src="media/checklist/result/fail_on.png" ng-class="getStatusFilterClass(1)">
+      <img ng-click="addToStatusFilter(2)" alt="Bug" title="Bug" name="bug" src="media/checklist/result/bugs_on.png" ng-class="getStatusFilterClass(2)">
+      <img ng-click="addToStatusFilter(3)" alt="Blocked" title="Blocked" name="blocked" src="media/checklist/result/blocked_on.png" ng-class="getStatusFilterClass(3)">
+      <img ng-click="addToStatusFilter(4)" alt="Not run" title="Not run" name="notrun" src="media/checklist/result/notrun_on.png" ng-class="getStatusFilterClass(4)">
+    </div>
+    <div class="row checklist-header">
+      <div class="col-sm-1">
+        №:
+      </div>
+      <div class="col-sm-1">
+        Priority
+      </div>
+      <div class="col-sm-5">
+        Step
+      </div>
+      <div class="col-sm-3">
+        Comment
+      </div>
+      <div class="col-sm-2">
+        <div style="width:20%;float:left;text-align: center" ng-repeat="env in checklist.environment">E{{$index + 1}}</div>
+      </div>
+    </div>
+    <div class="steps scroll-wrapper" style="margin: 0px 10px 5px; overflow-x: hidden; overflow-y: scroll" id="scroll-wrapper" ng-style="{'height' : isOpen ? 'calc(100% - 280px)' : 'calc(100% - 138px)'}">
+      <div infinite-scroll='loadMoreSteps()' infinite-scroll-container="'.scroll-wrapper'" infinite-scroll-distance='5'>
+          <div ng-init="step.id = step.id ? step.id : $index+1;" ng-repeat="step in renderedSteps | statusFilter:selectedStatuses | orderBy:'id' track by step._id" class="row step" ng-class="{ok:step.status == 0,fail:step.status == 1, bug:step.status == 2, blocked:step.status == 3, default: step.status == 4}">
+              <div class="col-sm-1">
+                  <input id="step-number" class="form-control" ng-model="step.id" readonly>
+              </div>
+              <div class="col-sm-1">
+                <img ng-src="{{getPriorityImage(step)}}" title="{{getPriorityTitle(step)}}">
+              </div>
+              <div class="col-sm-5">
+                  <pre ng-bind-html="step.step|| 'no description'"></pre>
+              </div>
+              <div class="col-sm-3">
+                  <a ng-if="checklist.status == 0" href="#" editable-textarea="step.comment" e-rows="10" e-cols="30" onaftersave="update(checklist)" blur="submit">
+                      <pre ng-bind-html="step.comment|| 'no description'"></pre>
+                  </a>
+                  <pre ng-if="checklist.status !== 0" ng-bind-html="step.comment|| 'no description'"></pre>
+              </div>
+              <div class="col-sm-2 statusFilter" ng-init="step.status = step.status != undefined ? step.status : 4;isStatusOpen = false;">
+                  <div style="width:20%;float:left;" ng-repeat="env in checklist.environment">
+                    <img ng-click="isStatusOpen = !isStatusOpen;setCurrentEnv(env);" class="active" alt="{{getStatusTitle(step, env)}}" title="{{getStatusTitle(step, env)}} on {{getNameOfEnvById(env)}}" src="{{getStatusImage(step, env)}}">
+                    <div ng-show="isStatusOpen" class="well" style="position: absolute;z-index: 2;top:0;width: 205px;left: 0;">
+                      <div style="float:left">
+                        <img ng-click="changeStepStatus(0, step);changeStepEnvStatus(0, step);isStatusOpen = !isStatusOpen" alt="Ok" title="Ok" src="media/checklist/result/ok_on.png" ng-class="{active:step.envs[env] == 0}">
+                      </div>
+                      <div style="float: left">
+                        <img ng-click="changeStepStatus(1, step);changeStepEnvStatus(1, step);isStatusOpen = !isStatusOpen" alt="Fail" title="Fail" src="media/checklist/result/fail_on.png" ng-class="{active:step.envs[env] == 1}">
+                      </div>
+                      <div style="float: left">
+                        <img ng-click="changeStepStatus(2, step);changeStepEnvStatus(2, step);isStatusOpen = !isStatusOpen" alt="Bug" title="Bug" src="media/checklist/result/bugs_on.png" ng-class="{active:step.envs[env] == 2}">
+                      </div>
+                      <div style="float: left">
+                        <img ng-click="changeStepStatus(3, step);changeStepEnvStatus(3, step);isStatusOpen = !isStatusOpen" alt="Blocked" title="Blocked" src="media/checklist/result/blocked_on.png" ng-class="{active:step.envs[env] == 3}">
+                      </div>
+                      <div style="float: left">
+                        <img ng-click="changeStepStatus(4, step);changeStepEnvStatus(4, step);isStatusOpen = !isStatusOpen" alt="Not run" title="Not run" src="media/checklist/result/notrun_on.png" ng-class="{active:step.envs[env] == 4}">
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>

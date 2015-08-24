@@ -1,0 +1,55 @@
+<div class="dialog-contents">
+    <div class="row" style="margin-top: 5px">
+        <div class="col-sm-12">
+          <span class="label label-success">Active:</span>
+          <div class="checkbox">
+            <input type="checkbox" id="active" ng-model="selectedUser.active">
+            <label for="active"></label>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <span class="label label-success">Is Admin:</span>
+          <div class="checkbox">
+            <input type="checkbox" id="admin" ng-model="selectedUser.admin">
+            <label for="admin"></label>
+          </div>
+        </div>
+        <div class="col-sm-12">
+            <span class="label label-success">Username:</span>
+            <input class="form-control" ng-model="selectedUser.username">
+        </div>
+        <div class="col-sm-12">
+            <span class="label label-success">Name:</span>
+            <input class="form-control" ng-model="selectedUser.name">
+        </div>
+        <div class="col-sm-12">
+            <span class="label label-success">Search:</span>
+            <input class="form-control" ng-model="selectedUser.search">
+        </div>
+        <div class="col-sm-12">
+            <span class="label label-success">E-mail:</span>
+            <input class="form-control" ng-model="selectedUser.email">
+        </div>
+        <div class="col-sm-12">
+            <span class="label label-success">Password:</span>
+            <input class="form-control" type="password" ng-model="selectedUser.password">
+        </div>
+        <div class="col-sm-12">
+          <span class="label label-success">Redmine Api Key:</span>
+          <input class="form-control" ng-model="selectedUser.redmine_key">
+        </div>
+        <div class="col-sm-12">
+          <span class="label label-success">Redmine ID:</span>
+          <input class="form-control" ng-model="selectedUser.redmine_id">
+        </div>
+
+    </div>
+    <div class="row" style="padding-top: 5px">
+        <div class="col-sm-6">
+            <button class="form-control btn btn-primary" ng-click="closeThisDialog()">Cancel</button>
+        </div>
+        <div class="col-sm-6">
+            <button class="form-control btn btn-success" ng-click="confirm()">Update</button>
+        </div>
+    </div>
+</div>

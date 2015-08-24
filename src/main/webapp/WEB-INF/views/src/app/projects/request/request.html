@@ -1,0 +1,138 @@
+<div class="row-fluid projects-layout" style="margin-left: 10px !important;margin-right: 5px !important;">
+    <div class="col-md-6 col-md-offset-3 well">
+        <tabset>
+            <tab heading="Existing Project" active="active" disabled="disabled">
+                <div>
+                    <form name="formExisting" ng-submit="projectRequest.submit(formExisting, request)" novalidate>
+                        <div class="row" style="margin-left: 0px;margin-right: 0px" ng-class="{'has-error': formExisting.manager.$error.mongoose}">
+                            <span class="label label-success">Manager (who request):</span>
+                            <input name="manager" class="form-control" ng-model="projectRequest.request.manager" autofocus mongoose-error>
+                            <p class="help-block"
+                               ng-show="formExisting.manager.$error.mongoose">
+                                Field is {{ errors.manager }}.
+                            </p>
+                        </div>
+                        <div class="row" style="margin-left: 0px;margin-right: 0px" ng-class="{'has-error': formExisting.project.$error.mongoose}">
+                            <span class="label label-success">Project:</span>
+                            <input name="project" ui-select2="projectRequest.select2ProjectsOptions" ng-model="projectRequest.request.project" style="height:auto; width:100%" mongoose-error ng-change="change(formExisting, request.project)">
+                            <p class="help-block"
+                               ng-show="formExisting.project.$error.mongoose">
+                                Field is {{ projectRequest.errors.project }}.
+                            </p>
+                        </div>
+                        <div class="row" style="margin-left: 0px;margin-right: 0px" ng-class="{'has-error': formExisting.version.$error.mongoose}">
+                            <span class="label label-success">Target version:</span>
+                            <input name="version" class="form-control" ng-model="projectRequest.request.version" mongoose-error>
+                            <p class="help-block"
+                               ng-show="formExisting.version.$error.mongoose">
+                                Field is {{ errors.version }}.
+                            </p>
+                        </div>
+                        <div class="row" style="margin-left: 0px;margin-right: 0px" ng-class="{'has-error': formExisting.appVersion.$error.mongoose}">
+                            <span class="label label-success">App version:</span>
+                            <input name="appVersion" class="form-control" ng-model="projectRequest.request.appVersion" mongoose-error>
+                            <p class="help-block"
+                               ng-show="formExisting.appVersion.$error.mongoose">
+                                Field is {{ projectRequest.errors.appVersion }}.
+                            </p>
+                        </div>
+                        <div class="row" style="margin-left: 0px;margin-right: 0px" ng-class="{'has-error': formExisting.assignee.$error.mongoose}">
+                            <span class="label label-success">Assignee:</span>
+                            <input name="assignee" class="form-control" ng-model="projectRequest.request.assignee" mongoose-error>
+                            <p class="help-block"
+                               ng-show="formExisting.assignee.$error.mongoose">
+                                Field is {{ projectRequest.errors.assignee }}.
+                            </p>
+                        </div>
+                        <div class="row" style="margin-left: 0px;margin-right: 0px" ng-class="{'has-error': formExisting.tasks.$error.mongoose}">
+                            <span class="label label-success">Tasks for testing:</span>
+                            <textarea name="tasks" class="form-control" ng-model="projectRequest.request.tasks" mongoose-error></textarea>
+                            <p class="help-block"
+                               ng-show="formExisting.tasks.$error.mongoose">
+                                Field is {{ projectRequest.errors.tasks }}.
+                            </p>
+                        </div>
+                        <div class="row" style="margin-left: 0px;margin-right: 0px" ng-class="{'has-error': formExisting.other.$error.mongoose}">
+                            <span class="label label-success">Other (login credentials, links to specs and etc):</span>
+                            <textarea name="other" class="form-control" ng-model="projectRequest.request.other" mongoose-error></textarea>
+                            <p class="help-block"
+                               ng-show="formExisting.other.$error.mongoose">
+                                Field is {{ projectRequest.errors.other }}.
+                            </p>
+                        </div>
+                        <div class="row" style="padding-top: 5px">
+                            <div class="col-sm-2">
+                                <button type="submit" class="btn btn-success">Send</button>
+                            </div>
+                            <div ng-show="requestTestingSuccess" class="col-sm-10">
+                                <div class="alert alert-success">Mail successful send!</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </tab>
+            <tab heading="New Project" active="activeNew" disabled="disabledNew">
+                <div>
+                    <form name="formNew" ng-submit="projectRequest.submitNew(formNew, newRequest)">
+                        <div class="row" style="margin-left: 0px;margin-right: 0px" ng-class="{'has-error': formNew.manager.$error.mongoose}">
+                            <span class="label label-success">Manager (who request):</span>
+                            <input name="manager" class="form-control" ng-model="projectRequest.newRequest.manager" mongoose-error>
+                            <p class="help-block"
+                               ng-show="formNew.manager.$error.mongoose">
+                                Field is {{ projectRequest.errors.manager }}.
+                            </p>
+                        </div>
+                        <div class="row" style="margin-left: 0px;margin-right: 0px" ng-class="{'has-error': formNew.project.$error.mongoose}">
+                            <span class="label label-success">Project:</span>
+                            <input name="project" class="form-control" ng-model="projectRequest.newRequest.project" mongoose-error>
+                            <p class="help-block"
+                               ng-show="formNew.project.$error.mongoose">
+                                Field is {{ projectRequest.errors.project }}.
+                            </p>
+                        </div>
+                        <div class="row" style="margin-left: 0px;margin-right: 0px" ng-class="{'has-error': formNew.offer.$error.mongoose}">
+                            <span class="label label-success">Offer:</span>
+                            <input name="offer" class="form-control" ng-model="projectRequest.newRequest.offer" mongoose-error>
+                            <p class="help-block"
+                               ng-show="formNew.offer.$error.mongoose">
+                                Field is {{ projectRequest.errors.offer }}.
+                            </p>
+                        </div>
+                        <div class="row" style="margin-left: 0px;margin-right: 0px" ng-class="{'has-error': formNew.design.$error.mongoose}">
+                            <span class="label label-success">Design:</span>
+                            <input name="design" class="form-control" ng-model="projectRequest.newRequest.design" mongoose-error>
+                            <p class="help-block"
+                               ng-show="formNew.design.$error.mongoose">
+                                Field is {{ projectRequest.errors.design }}.
+                            </p>
+                        </div>
+                        <div class="row" style="margin-left: 0px;margin-right: 0px" ng-class="{'has-error': formNew.tech.$error.mongoose}">
+                            <span class="label label-success">Technical info:</span>
+                            <textarea name="tech" class="form-control" ng-model="projectRequest.newRequest.tech" mongoose-error></textarea>
+                            <p class="help-block"
+                               ng-show="formNew.tech.$error.mongoose">
+                                Field is {{ projectRequest.errors.tech }}.
+                            </p>
+                        </div>
+                        <div class="row" style="margin-left: 0px;margin-right: 0px" ng-class="{'has-error': formNew.works.$error.mongoose}">
+                            <span class="label label-success">Planned testing works:</span>
+                            <textarea name="works" class="form-control" ng-model="projectRequest.newRequest.works" mongoose-error></textarea>
+                            <p class="help-block"
+                               ng-show="formNew.works.$error.mongoose">
+                                Field is {{ projectRequest.errors.works }}.
+                            </p>
+                        </div>
+                        <div class="row" style="padding-top: 5px">
+                            <div class="col-sm-2">
+                                <button type="submit" class="btn btn-success">Send</button>
+                            </div>
+                            <div ng-show="requestNewTestingSuccess" class="col-sm-10">
+                                <div class="alert alert-success">Mail successful send!</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </tab>
+        </tabset>
+    </div>
+</div>

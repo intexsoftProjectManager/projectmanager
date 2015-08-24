@@ -1,0 +1,143 @@
+<div class="row-fluid projects-layout well" style="margin:20px 0;padding:20px 10px;height:100%">
+    <div class="col-sm-12" style="height: 100%">
+        <tabset class="tabs-left" style="padding:0;height: 100%;width:100%">
+          <tab heading="Description">
+            <div class="col-sm-7 col-xs-7" style="height: 100%">
+              <div class="row" style="margin:0;border-bottom: 1px solid #b1b1b1;height: 33px;padding: 5px 10px;font-size: 16px;font-family: 'Ubuntu Medium'; color:#0b7458;" >
+                <span>Project Description</span>
+              </div>
+              <div class="row" style="overflow-y: auto; overflow-x:hidden;height: calc(100% - 33px);">
+                <div class="row" style="margin:0 5px;padding: 5px 10px;">
+                  <input placeholder="Project" ng-disabled="!project.hasPermissionEdit" id="project" class="form-control" ng-model="project.project.name" ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0} }" ng-change="project.update()">
+                </div>
+                <div class="row" style="margin:0 5px;padding: 5px 10px;">
+                        <textarea style="height:auto !important;" placeholder="Description" ng-disabled="!project.hasPermissionEdit" id="description"  rows="8" class="form-control" ng-model="project.project.desc" ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0} }"  ng-change="project.update()">
+                        </textarea>
+                </div>
+                <div class="row" style="margin:0 5px;padding: 5px 10px;">
+                   <ui-select ng-model="project.project.priority"
+                             theme="bootstrap"
+                             reset-search-input="false"
+                             on-select="project.update()"
+                             style="height: 35px">
+                    <ui-select-match placeholder="Select priority...">{{$select.selected.text}}</ui-select-match>
+                    <ui-select-choices repeat="priority.value as priority in project.priorities">
+                      <div ng-bind-html="priority.text | highlight: $select.search"></div>
+                    </ui-select-choices>
+                  </ui-select>
+                </div>
+                <div class="row" style="margin:0 5px;padding: 5px 10px;">
+                  <input placeholder="Redmine ID" id="redmine-id" class="form-control" ng-model="project.project.redmine_id" ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0} }"  ng-change="project.update()">
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-5 col-xs-5" style="height: 100%">
+              <div class="row" style="margin:0;border-bottom: 1px solid #b1b1b1;height: 33px;padding: 5px 10px;font-size: 16px;font-family: 'Ubuntu Medium'; color:#0b7458;" >
+                <span>Users</span>
+                <span style="float:right;">Count: {{project.project.users.length}}</span>
+              </div>
+              <div class="row" style="margin: 0;overflow-y: auto; overflow-x:hidden;height: calc(100% - 33px);margin: 5px 5px 0;border-radius: 2px;">
+                <div style="
+                      padding-left: 5px !important;
+                      padding-right: 5px !important;border-radius: 2px;background-color: white;margin-bottom: 5px;background-color: white"
+                     ng-repeat="user in project.project.users" class="col-sm-12">
+                  {{user.name}}
+                </div>
+                <div style="
+                      padding-left: 5px !important;
+                      padding-right: 5px !important;border-radius: 2px;background-color: white;margin-bottom: 5px;background-color: white" ng-hide = "project.project.users">
+                  Project has no users
+                </div>
+              </div>
+            </div>
+          </tab>
+          <tab heading="Charts">
+              <div class="row" style="margin:0;border-bottom: 1px solid #b1b1b1;height: 33px" >
+                <div class="btn-group pull-right" dropdown>
+                  <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+                    Redmine Dev\Tester <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" style="overflow-y: auto;max-height: 250px">
+                    <li><a ng-click="project.changeToDevTesterAll();">All</a></li>
+                    <li ng-repeat="iteration in project.redmineIterations" ng-click="project.changeToDevTester(iteration);"><a>For {{iteration.text}}</a></li>
+                  </ul>
+                </div>
+                <button class="pull-right btn btn-primary" ng-click="project.changeToRedmineIssues()">Redmine Issues</button>
+                <button class="pull-right btn btn-primary" ng-click="project.changeToDefectsByPriority()">Defects By Priority</button>
+                <button class="pull-right btn btn-primary" ng-click="project.changeToPassFail()">Pass/Failed/Blocked</button>
+                <button class="pull-left btn btn-primary" ng-click="project.downloadChart()">Generate Image</button>
+              </div>
+              <div google-chart chart="project.chartObject" on-ready="project.chartReady(chartWrapper)" style="height:calc(100% - 33px); width:100%;"></div>
+          </tab>
+          <tab heading="Iterations">
+            <div class="row" style="margin:0;border-bottom: 1px solid #b1b1b1;height: 33px;padding: 5px 10px;font-size: 16px;font-family: 'Ubuntu Medium'; color:#0b7458;" >
+              <span>Iterations</span>
+              <span style="float:right;">Count: {{project.iterations.length}}</span>
+            </div>
+            <div ng-show = "project.iterations.length > 0" style="overflow-y: auto;overflow-x:hidden;height: calc(100% - 33px)">
+              <div ng-repeat="iteration in project.iterations | orderBy:'-endDate'" class="row" style="background-color: white;margin: 2px 5px 0;border-radius: 2px;">
+                <div class="col-sm-12">{{iteration.name}}</div>
+                <div class="col-sm-12" style="font-size: 12px">End date | {{iteration.endDate | date : "dd.MM.yyyy"}}</div>
+              </div>
+            </div>
+            <div ng-show = "project.iterations.length === 0" style="background-color: #ffffff">
+              Nothing to show. No one iteration started yet.
+            </div>
+            <div ng-show="project.iterations == undefined" style="background-color: #ffffff;position: relative;min-height: 70px;">
+              <img class="img-center" width="32px" src="media/ajax-loader.gif">
+            </div>
+          </tab>
+          <tab heading="Launched checklists">
+            <div class="row" style="margin:0;border-bottom: 1px solid #b1b1b1;height: 33px;padding: 5px 10px;font-size: 16px;font-family: 'Ubuntu Medium'; color:#0b7458;" >
+              <span style="float:right;">Count: {{project.executedChecklists.length}}</span>
+            </div>
+            <div ng-show = "project.executedChecklists.length > 0" style="overflow-y: auto;overflow-x:hidden;height: calc(100% - 33px)">
+              <div ng-click="project.openExecutedChecklist(checklist)" ng-repeat="checklist in project.executedChecklists" class="row" style="background-color: white;margin: 2px 5px 5px;border-radius: 2px;">
+                <div class="col-sm-12">{{checklist.name}}</div>
+                <div class="col-sm-12" style="font-size: 12px">Start date | {{checklist.startDate | date : "dd.MM.yyyy hh:mm:ss"}}</div>
+              </div>
+            </div>
+            <div ng-show = "project.executedChecklists.length === 0" style="background-color: #ffffff">
+              Nothing to show. No one checklist started yet.
+            </div>
+            <div ng-show="project.executedChecklists == undefined" style="background-color: #ffffff;position: relative;min-height: 70px;">
+              <img class="img-center" width="32px" src="media/ajax-loader.gif">
+            </div>
+          </tab>
+          <tab heading="Finished checklists">
+            <div class="row" style="margin:0;border-bottom: 1px solid #b1b1b1;height: 33px;padding: 5px 10px;font-size: 16px;font-family: 'Ubuntu Medium'; color:#0b7458;" >
+              <span style="float:right;">Count: {{project.finishedCheklists.length}}</span>
+            </div>
+            <div class="row" style="margin:0">
+              <div class="col-sm-2">Checklist</div>
+              <div class="col-sm-2">Tester</div>
+              <div class="col-sm-2">Environment</div>
+              <div class="col-sm-2">Build</div>
+              <div class="col-sm-2">End time</div>
+              <div ng-if="project.isAdmin" class="col-sm-2">Spent time</div>
+            </div>
+            <div style="overflow-y: auto;overflow-x:hidden;height:calc(100% - 52px)">
+              <div ng-show ="project.finishedCheklists.length > 0" class="row" ng-click="project.openExecutedChecklist(checklist)" ng-repeat="checklist in project.finishedCheklists | orderBy:'-endDate'" style="border-bottom-color: #d3d3d3;border-bottom-width: 1px;border-bottom-style: solid;background-color: white;margin:0" >
+                <div class="col-sm-2">{{checklist.name}}</div>
+                <div class="col-sm-2">{{checklist.creator.name}}</div>
+                <div class="col-sm-2">
+                  <div ng-repeat="env in checklist.environment">
+                    {{env.name}}
+                  </div>
+                </div>
+                <div class="col-sm-2">{{checklist.build.name}}</div>
+                <div class="col-sm-2">{{checklist.endDate | date:"dd.MM.yyyy HH:mm:ss"}}</div>
+                <div ng-if="project.isAdmin" class="col-sm-2">{{project.millisToUTCDate(checklist.spendTime) | date:"HH:mm:ss"}}</div>
+              </div>
+              <div ng-show="project.finishedCheklists.length === 0" style="background-color: #ffffff;min-height: 70px;">
+                Nothing to show. No one checklist finished yet.
+              </div>
+              <div ng-show="project.finishedCheklists == undefined" style="background-color: #ffffff;position: relative;min-height: 70px;">
+                <img class="img-center" width="32px" src="media/ajax-loader.gif">
+              </div>
+            </div>
+          </tab>
+        </tabset>
+    </div>
+
+</div>

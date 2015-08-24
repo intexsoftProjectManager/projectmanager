@@ -1,0 +1,56 @@
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="row navbar-style">
+        <div class="navbar-header pull-left" style="position: absolute;margin:-0.5% 0 0 0">
+          <a href="/" style="position: absolute">
+            <img class="navbar-logo navbar-brand" style="padding:0 !important;" src='../../../media/logo-symbol.png' title="IntexSoft QA" ng-style="{'width': currentUser ? '61px' : '130px','height': currentUser ? '71px' : '142px', 'margin': currentUser ? '15px 0' : '15px 0'}">
+          </a>
+        </div>
+        <div class="nav navbar-nav pull-right" style="position: absolute;height: 100%;width: 100%">
+            <ul class="nav navbar-nav nav-main" ng-show="navbar.currentUser" style="position: absolute;top:0;right: 0;bottom: 0;margin: auto;height: 90px">>
+                <li><a ui-sref-active-eq="activeMenu" ui-sref="main.projects">PROJECTS</a></li>
+                <li><a ui-sref-active-eq="activeMenu" ui-sref="main.calendars.iterations" >ITERATIONS CALENDAR</a></li>
+                <li><a ui-sref-active-eq="activeMenu" ui-sref="main.calendars.tasks">TASK CALENDAR</a></li>
+                <li><a ui-sref-active-eq="activeMenu" ui-sref="main.map">MAP DEMO</a></li>
+                <li class="dropdown" dropdown on-toggle="toggled(open)">
+                  <a class="dropdown-toggle" style="width:120px;font-size: 13px;padding-bottom: 25px;padding-top: 25px " dropdown-toggle>Welcome, {{ navbar.currentUser.username }}</a>
+                  <ul class="dropdown-menu">
+                    <li ng-if="navbar.isAdmin"><a ui-sref-active-eq="activeMenu" ui-sref="main.admin.user-manage">User Managment</a></li>
+                    <li><a ng-click="navbar.logout()"><span class="glyphicon-log-out"></span> Logout</a></li>
+                  </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav nav-main" ng-hide="navbar.currentUser" style="position: absolute;top:0;right: 0;bottom: 0;margin: auto;height: 90px">
+                <li> <img class="icon" src="../../../media/login.png" style="display: inline"><a class="login-link" ui-sref-active-eq="main.login" ui-sref="main.login" style="display: inline">LOGIN</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row" style="background-color: #2db490; margin: 0" ng-if="navbar.currentUser">
+        <div class="navbar-sub-style">
+          <div class="row pull-left" style="margin-left: 0px;margin-right: 0px">
+              <!--<input id="project" ui-select2="navbar.select2ProjectsOptions" ng-model="navbar.project" style="margin-top:7px;height:auto; width:230px;height: 35px" ng-change="navbar.open()">-->
+            <ui-select ng-model="navbar.project"
+                       theme="bootstrap"
+                       ng-disabled="disabled"
+                       reset-search-input="false"
+                       on-select="navbar.open($select.selected)"
+                       style="width: 230px;margin-top:7px;height:auto;height: 35px">
+              <ui-select-match placeholder="Select project...">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="project in navbar.projects track by $index"
+                                 refresh="navbar.refreshProjects($select.search)"
+                                 refresh-delay="0">
+                <div ng-bind-html="project.name | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+          <div class="nav navbar-nav pull-right">
+              <ul class="nav navbar-nav" ng-show="navbar.includes('main.projects.project')">
+                  <li><a ui-sref-active-eq="activeMenu" ui-sref="main.projects.project">Overview</a></li>
+                  <li><a ui-sref-active-eq="activeMenu" ui-sref="main.projects.project.timelines">TimeLines</a></li>
+                  <li><a ui-sref-active-eq="activeMenu" ui-sref="main.projects.project.checklists">Checklists</a></li>
+                  <li><a ui-sref-active-eq="activeMenu" ui-sref="main.projects.project.issues">Issues</a></li>
+                  <li><a ui-sref-active-eq="activeMenu" ui-sref="main.projects.project.settings">Settings</a></li>
+              </ul>
+          </div>
+        </div>
+    </div>
+</div>

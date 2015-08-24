@@ -1,0 +1,66 @@
+<div class="well project-settings" style="margin: 20px 0;padding: 5px;height:100%;">
+  <tabset style="margin-left: 5px !important;margin-right: 5px !important;height: 100%" >
+    <tab heading="Builds" ng-click="settings.updateScroll()">
+      <div class="col-sm-12 col-xs-12" style="height: 100%">
+        <div class="row checklist-header">
+          <div class="col-sm-4">
+            Name
+          </div>
+          <div class="col-sm-8">
+            Description
+          </div>
+        </div>
+        <div class="steps scroll-wrapper" mb-scrollbar id="scroll-wrapper-1" ng-style="{'height' : 'calc(100% - 90px)'}">
+          <div on-height-change="settings.updateScroll()">
+            <div context-menu data-target="menu-{{ $index }}" ng-repeat="build in settings.builds | orderBy:'name' track by build._id" class="row step" ng-class="{even: $even, odd: $odd}">
+              <div class="col-sm-4">
+                <a href="#" editable-textarea="build.name" e-rows="10" e-cols="30" onaftersave="settings.update(build);" blur="submit">
+                  <pre ng-bind-html="build.name|| 'no name'"></pre>
+                </a>
+              </div>
+              <div class="col-sm-8">
+                <a href="#" editable-textarea="build.desc" e-rows="10" e-cols="30" onaftersave="settings.update(build);" blur="submit">
+                  <pre ng-bind-html="build.desc || 'no description'"></pre>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="height: 50px;margin:5px 10px 5px 10px;">
+          <img ng-click="settings.addBuild()" class="pull-right" title="Add build" style="cursor: pointer;margin-top: 10px;margin-left:20px" src="media/step_add.png">
+        </div>
+      </div>
+    </tab>
+    <tab heading="Environments" ng-click="settings.updateScroll()">
+      <div class="col-sm-12 col-xs-12" style="height: 100%">
+        <div class="row checklist-header">
+          <div class="col-sm-4">
+            Name
+          </div>
+          <div class="col-sm-8">
+            Description
+          </div>
+        </div>
+        <div class="steps scroll-wrapper" mb-scrollbar id="scroll-wrapper-2" ng-style="{'height' : 'calc(100% - 90px)'}">
+          <div on-height-change="settings.updateScroll()">
+            <div ng-repeat="env in settings.envs | orderBy:'name' track by env._id" class="row step" ng-class="{even: $even, odd: $odd}">
+              <div class="col-sm-4">
+                <a href="#" editable-textarea="env.name" e-rows="10" e-cols="30" onaftersave="settings.update(env);" blur="submit">
+                  <pre ng-bind-html="env.name|| 'no name'"></pre>
+                </a>
+              </div>
+              <div class="col-sm-8">
+                <a href="#" editable-textarea="env.desc" e-rows="10" e-cols="30" onaftersave="settings.update(env);" blur="submit">
+                  <pre ng-bind-html="env.desc || 'no description'"></pre>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="height: 50px;margin:5px 10px 5px 10px;">
+          <img ng-click="settings.addEnv()" class="pull-right" title="Add environment" style="cursor: pointer;margin-top: 10px;margin-left:20px" src="media/step_add.png">
+        </div>
+      </div>
+    </tab>
+  </tabset>
+</div>

@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-sm-12">
+        Edit Task
+    </div>
+</div>
+<div class="row">
+    <form name="editTaskForm" class="form-horizontal col-sm-12" ng-submit="confirm()">
+        <div class="row" style="margin-left: 0px;margin-right: 0px">
+            <span class="label label-success">Iteration:</span>
+            <ui-select ng-model="e_selected.iteration"
+                       theme="bootstrap"
+                       reset-search-input="false"
+                       style="height: 35px">
+              <ui-select-match placeholder="Select iteration...">{{$select.selected.text}}</ui-select-match>
+              <ui-select-choices repeat="iteration.id as iteration in iterations"
+                                 refresh="getIterations($select.search)"
+                                 refresh-delay="0">
+                <div ng-bind-html="iteration.text | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="row" style="margin-left: 0px;margin-right: 0px">
+            <span class="label label-success">Task:</span>
+            <input required maxlength="100" id="task" class="form-control" ng-model="e_selected.name">
+        </div>
+        <span class="label label-success">Whens:</span>
+        <div class="row" style="margin-left: 0px;margin-right: 0px">
+            <input required type="text" is-open="openStartDate" ng-click="openStartDate = true" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="e_selected.start" style="width:100%">
+            <span class="input-group-addon">to</span>
+            <input required type="text" is-open="openEndDate" ng-click="openEndDate = true" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="e_selected.end" style="width:100%">
+        </div>
+        <div class="row" style="margin-left: 0px;margin-right: 0px">
+            <span class="label label-success">Priority:</span>
+            <select class="form-control" ng-model="e_selected.priority" id="new-priority" ng-options="priority.value as priority.text for priority in priorities">
+            </select>
+        </div>
+        <div class="row" style="margin-left: 0px;margin-right: 0px">
+            <span class="label label-success">Color:</span>
+            <spectrum-colorpicker ng-model="e_selected.color" options='{allowEmpty: true, clickoutFiresChange: true}' format="Hex"></spectrum-colorpicker>
+        </div>
+        <div class="row" style="margin-left: 0px;margin-right: 0px">
+            <span class="label label-success">Users:</span>
+            <input type="hidden" ui-select2="select2UsersOptions" ng-model="e_selected.users" style="height:auto; width:99%">
+        </div>
+        <div class="row center-block" style="padding-top: 5px">
+            <div class="col-sm-6">
+                <button class="form-control btn btn-primary" ng-click="closeThisDialog()">Cancel</button>
+            </div>
+            <div class="col-sm-6">
+                <button class="form-control btn btn-success" type="submit" ng-disabled="createTaskForm.$invalid || newTask._iteration.length == 0">Update</button>
+            </div>
+        </div>
+    </form>
+</div>

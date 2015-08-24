@@ -1,0 +1,79 @@
+<div class="row calendar-layout well" style="margin-left: 0px !important;margin-right: 0px !important;height: 100%;padding: 5px" ng-init="getUsers();getProjects()">
+    <tabset style="margin-left: 5px !important;margin-right: 5px !important;height:100%" >
+        <tab heading="By Project" ng-click="onTabClick(tabs.project, tabs.user);tabs.project.rendered = true;">
+            <div ng-if="tabs.project.rendered" style="padding-left: 15px; padding-right: 15px; padding-bottom: 15px;width:99%; position: absolute; height:calc(100% - 50px)">
+                <div class='calendarByProject' ui-calendar="uiConfigByProject.calendar" data-calendar="iterationByProject" ng-model="eventSourcesByProject" style="position: absolute;height:100%;width:99%;margin-left:-15px"></div>
+            </div>
+        </tab>
+        <tab heading="By User" ng-click="onTabClick(tabs.user, tabs.project);tabs.user.rendered = true;">
+            <div ng-if="tabs.user.rendered" style="padding-left: 15px; padding-right: 15px; padding-bottom: 15px;width:99%; position: absolute;height:calc(100% - 50px)">
+                <div class='calendarByUser' ui-calendar="uiConfigByUser.calendar" data-calendar="iterationByUser" ng-model="eventSourcesByUser" style="position: absolute;height:100%;width:99%;margin-left:-15px"></div>
+            </div>
+        </tab>
+    </tabset>
+    <div class="accordion-style">
+        <accordion close-others="oneAtATime" class="accordion">
+            <accordion-group ng-show="!accordionGroups[0].isDisabled" is-collapseble="false" is-open="accordionGroups[0].isOpen" is-disabled="accordionGroups[0].isDisabled">
+                <accordion-heading>
+                    Iteration Description <i class="pull-right glyphicon glyphicon-remove" ng-click="accordionGroups[0].isDisabled = !accordionGroups[0].isDisabled;close()" title="Close"></i>
+                </accordion-heading>
+                <div class="form-group">
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <span class="label label-success">Project:</span>
+                        <input disabled id="project" class="form-control" ng-model="e_selected.project" ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0} }" ng-change="update()">
+                    </div>
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <span class="label label-success">Iteration:</span>
+                        <input ng-disabled="!hasPermissionEdit" id="description" class="form-control" ng-model="e_selected.name" ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0} }"  ng-change="update()">
+                    </div>
+                    <span class="label label-success">Whens:</span>
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <input ng-disabled="!hasPermissionEdit" type="text" is-open="openStartDate" ng-click="openStartDate = true" datepicker-popup ng-model="e_selected.start" style="width:100%" ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0} }" ng-change="update()">
+                        <span class="input-group-addon">to</span>
+                        <input ng-disabled="!hasPermissionEdit" type="text" is-open="openEndDate" ng-click="openEndDate = true" datepicker-popup ng-model="e_selected.end" style="width:100%" ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0} }" ng-change="update()">
+                    </div>
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <span class="label label-success">Color:</span>
+                        <spectrum-colorpicker ng-disabled="!hasPermissionEdit" ng-model="e_selected.color" options='{allowEmpty: true, clickoutFiresChange: true, disabled:{{!hasPermissionEdit}}}' format="Hex" ng-change="update()"></spectrum-colorpicker>
+                    </div>
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <span class="label label-success">Users:</span>
+                        <input ng-disabled="!hasPermissionEdit" type="hidden" ui-select2="select2UsersOptions" ng-model="e_selected.users" style="height:auto; width:100%" ng-change="update()">
+                    </div>
+                </div>
+            </accordion-group>
+            <accordion-group ng-if="!accordionGroups[1].isDisabled" is-collapseble="false" is-open="accordionGroups[1].isOpen" is-disabled="accordionGroups[1].isDisabled">
+                <accordion-heading>
+                    Create New Iteration <i class="pull-right glyphicon glyphicon-remove" ng-click="accordionGroups[1].isDisabled = !accordionGroups[1].isDisabled;close()" title="Close"></i>
+                </accordion-heading>
+                <form name="createIterationForm" class="form-horizontal" ng-submit="create()">
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <span class="label label-success">Project:</span>
+                        <input id="_project" ui-select2="select2ProjectsOptions" ng-model="newIteration._project" style="height:auto; width:100%">
+                    </div>
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <span class="label label-success">Iteration:</span>
+                        <input required id="name" class="form-control" ng-model="newIteration.name" ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0} }">
+                    </div>
+                    <span class="label label-success">Whens:</span>
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <input required id="startDate" is-open="openStartDate" ng-click="openStartDate = true" type="text" is-open="false" datepicker-popup ng-model="newIteration.startDate" style="width:100%">
+                        <span class="input-group-addon">to</span>
+                        <input required id="endDate" is-open="openEndDate" ng-click="openEndDate = true" type="text" datepicker-popup ng-model="newIteration.endDate" style="width:100%">
+                    </div>
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <span class="label label-success">Color:</span>
+                        <spectrum-colorpicker ng-model="newIteration.color" options='{allowEmpty: true, clickoutFiresChange: true}' format="Hex"></spectrum-colorpicker>
+                    </div>
+                    <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <span class="label label-success">Users:</span>
+                        <input type="hidden" ui-select2="select2UsersOptions" ng-model="newIteration._user" style="height:auto; width:100%">
+                    </div>
+                    <div class="row center-block" style="padding-top: 5px">
+                        <button type="submit" class="btn btn-success" ng-disabled="createIterationForm.$invalid || newIteration._project.length == 0">Create</button>
+                    </div>
+                </form>
+            </accordion-group>
+        </accordion>
+   </div>
+</div>
