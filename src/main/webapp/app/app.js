@@ -1,5 +1,38 @@
-(function(angular) {
-  angular.module("myApp.controllers", []);
-  angular.module("myApp.services", []);
-  angular.module("myApp", ["ngResource", "spring-data-rest", "myApp.controllers", "myApp.services"]);
-}(angular));
+'use strict';
+
+var app = angular.module('tms', [
+  'ngCookies',
+  'ngResource',
+  'ngSanitize',
+  'ngRoute',
+  'http-auth-interceptor',
+  'ui.bootstrap',
+  'ngTable',
+  'ui.select2',
+  'btford.socket-io',
+  'ui.calendar',
+  'angularSpectrumColorpicker',
+  'ngDialog',
+  'acute.select',
+  'xeditable',
+  'textAngular',
+  'ng-iscroll',
+  'infinite-scroll',
+  'google-maps',
+  'checklist-model',
+  'mb-scrollbar',
+  'ng-context-menu',
+  'ui.router',
+  'ui.select',
+  'angularMoment',
+  'gantt',
+  'gantt.sortable',
+  'gantt.movable',
+  'gantt.drawtask',
+  'gantt.tooltips',
+  'gantt.bounds',
+  'gantt.progress',
+  'gantt.labels',
+  'googlechart',
+  'angularFileUpload'
+]);

@@ -25,6 +25,7 @@ dependencies {
     compile 'org.webjars:bootstrap:+'
     compile 'com.jolbox:bonecp:0.7.1.RELEASE'
     compile 'commons-lang:commons-lang:+'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.2.2'
     runtime 'javax.servlet:jstl:1.2'
     runtime 'org.slf4j:jcl-over-slf4j:+'
     runtime 'org.slf4j:slf4j-log4j12:+'

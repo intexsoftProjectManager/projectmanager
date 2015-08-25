@@ -1,8 +1,14 @@
 package by.intexsoft.projectmanager.config;
 
+import javax.annotation.Resource;
+
 import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.mvc.WebContentInterceptor;
+import org.springframework.web.servlet.resource.CssLinkResourceTransformer;
+import org.springframework.web.servlet.resource.GzipResourceResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
