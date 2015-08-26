@@ -35,8 +35,13 @@ import by.intexsoft.projectmanager.service.UserService;
 
 @Controller
 public class HomeController {
+	
+	@Autowired
+	UserService userService;
+	
     @RequestMapping("/")
     public String greeting() {
+    	User addUser = userService.addUser();
         return "index";
     }
 }
